@@ -9,7 +9,7 @@ public class ParkingLotManager {
         this.parkingTicket = parkingTicket;
     }
     public void parkVehicle(String vehicleType, String regNo, String color){
-        long slotNo = Long.MAX_VALUE;
+        long slotNo;
         ParkingSlot requiredSlot = null;
         for(ParkingFloor parkingFloor : parkingLot.floors){
             ArrayList<ParkingSlot> currentSlots = parkingFloor.availableParkingSlots.get(VehicleType.valueOf(vehicleType));
@@ -49,6 +49,10 @@ public class ParkingLotManager {
                 requiredSlot = slot;
                 break;
             }
+        }
+        if(requiredSlot == null || requiredSlot.vehicle == null){
+            System.out.println("Invalid Ticket");
+            return;
         }
         this.parkingLot.floors.get(Integer.parseInt(ticketDetails[1])-1).availableParkingSlots.get(vehicleType).add(requiredSlot);
         System.out.println("Unparked vehicle with Registration Number: "+ requiredSlot.vehicle.registrationNumber+" and Color: "+ requiredSlot.vehicle.color);

@@ -19,10 +19,8 @@ public class DesignParkingLot {
     //exit
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Hello");
         final BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        //String[] parkingLotDetails = bufferedReader.readLine().split(" ");
-        DesignParkingLot designParkingLot = null; //= new DesignParkingLot(Long.parseLong(parkingLotDetails[1]), Long.parseLong(parkingLotDetails[2]), Long.parseLong(parkingLotDetails[3]));
+        DesignParkingLot designParkingLot = null;
         while(true){
             String[] parkingLotDetails = bufferedReader.readLine().split(" ");
             if(parkingLotDetails[0].toLowerCase().compareTo("exit") == 0){
@@ -31,15 +29,28 @@ public class DesignParkingLot {
             switch (parkingLotDetails[0]){
                 case "create_parking_lot":
                     designParkingLot = new DesignParkingLot(parkingLotDetails[1], Long.parseLong(parkingLotDetails[2]), Long.parseLong(parkingLotDetails[3]));
+                    System.out.println("Created parking lot with "+ ParkingLot.getInstance().floors.size() +" floors and "+ ParkingLot.getInstance().slotsPerFloor +" slots per floor");
                     break;
                 case "park_vehicle":
-                    designParkingLot.parkingLotManager.parkVehicle(parkingLotDetails[1], parkingLotDetails[2], parkingLotDetails[3]);
+                    if(designParkingLot == null){
+                        System.out.println("Parking Lot not created. Create parking lot with command: create_parking_lot <no_of_floors> <no_of_slots_per_floor> ");
+                    }else {
+                        designParkingLot.parkingLotManager.parkVehicle(parkingLotDetails[1], parkingLotDetails[2], parkingLotDetails[3]);
+                    }
                     break;
                 case "unpark_vehicle":
-                    designParkingLot.parkingLotManager.unparkVehicle(parkingLotDetails[1]);
+                    if(designParkingLot == null){
+                        System.out.println("Parking Lot not created. Create parking lot with command: create_parking_lot <no_of_floors> <no_of_slots_per_floor> ");
+                    }else {
+                        designParkingLot.parkingLotManager.unparkVehicle(parkingLotDetails[1]);
+                    }
                     break;
                 case "display":
-                    designParkingLot.parkingLotManager.display(parkingLotDetails[1], parkingLotDetails[2]);
+                    if(designParkingLot == null){
+                        System.out.println("Parking Lot not created. Create parking lot with command: create_parking_lot <no_of_floors> <no_of_slots_per_floor> ");
+                    }else {
+                        designParkingLot.parkingLotManager.display(parkingLotDetails[1], parkingLotDetails[2]);
+                    }
                     break;
                 default:
                     break;
